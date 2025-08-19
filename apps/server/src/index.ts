@@ -2,6 +2,7 @@ import "dotenv/config";
 import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
+import { appRouter } from "./routers";
 
 const app = new Elysia()
   .use(
@@ -19,7 +20,7 @@ const app = new Elysia()
       },
     },
   }))
-  .get("/", () => "OK")
+  .use(appRouter)
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
   });
