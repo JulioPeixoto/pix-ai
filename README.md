@@ -2,6 +2,12 @@
 
 Use -> This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Elysia, and more.
 
+## Docs
+
+Itau [API Cash Management](https://devportal.itau.com.br/nossas-apis/itau-ep9-gtw-sispag-ext)
+Itau [API Pixautomatico](https://devportal.itau.com.br/nossas-apis/itau-ng7-api-pixautomatico-v1-externo)
+
+
 ## Features
 
 - **TypeScript** - For type safety and improved developer experience
