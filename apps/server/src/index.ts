@@ -3,9 +3,10 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import { usersRouter } from "./users/routes";
+import { contaBancariaRouter } from "./users/routes";
 
 const app = new Elysia({
-  prefix: "/api/v1",
+  prefix: "/v1",
 })
   .use(
     cors({
@@ -23,9 +24,10 @@ const app = new Elysia({
     },
   }))
   .get('/', ({ redirect }) => {
-    return redirect('/api/v1/docs')
+    return redirect('/v1/docs')
 })  .get("/health", () => "OK")
   .use(usersRouter)
+  .use(contaBancariaRouter)
   .listen(3000, () => {
-    console.log("Server is running on http://localhost:3000/api/v1");
+    console.log("Server is running on http://localhost:3000/v1");
   });

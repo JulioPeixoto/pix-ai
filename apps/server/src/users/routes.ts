@@ -1,6 +1,6 @@
 import { Elysia } from 'elysia'
-import { UserService } from './service'
-import { CreateUserSchema, UpdateUserSchema, UserParamsSchema } from './schema'
+import { ContaBancariaService, UserService } from './service'
+import { ContaBancariaParamsSchema, CreateContaBancariaSchema, CreateUserSchema, UpdateContaBancariaSchema, UpdateUserSchema, UserParamsSchema } from './schema'
 
 export const usersRouter = new Elysia({ prefix: '/users' })
   .get('/:id', async ({ params }) => {
@@ -36,4 +36,27 @@ export const usersRouter = new Elysia({ prefix: '/users' })
     return await UserService.getUserPixHistory(params.id)
   }, {
     params: UserParamsSchema
+  })
+
+export const contaBancariaRouter = new Elysia({ prefix: '/conta-bancaria' })
+  .get('/:id', async ({ params }) => {
+    return await ContaBancariaService.getContaBancaria(params.contaBancariaId)
+  }, {
+    params: ContaBancariaParamsSchema
+  })
+  .post('/', async ({ body }) => {
+    return await ContaBancariaService.createContaBancaria(body)
+  }, {
+    body: CreateContaBancariaSchema
+  })
+  .put('/:id', async ({ params, body }) => {
+    return await ContaBancariaService.updateContaBancaria(params.contaBancariaId, body)
+  }, {
+    params: ContaBancariaParamsSchema,
+    body: UpdateContaBancariaSchema
+  })
+  .delete('/:id', async ({ params }) => {
+    return await ContaBancariaService.deleteContaBancaria(params.contaBancariaId)
+  }, {
+    params: ContaBancariaParamsSchema
   })

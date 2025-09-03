@@ -1,4 +1,4 @@
-import type { User, CreateUserRequest, UpdateUserRequest, PixHistory } from './types'
+import type { User, CreateUserRequest, UpdateUserRequest, PixHistory, ContaBancaria, CreateContaBancariaRequest, UpdateContaBancariaRequest } from './types'
 
 export class UserRepository {
   static async findById(id: string): Promise<User | null> {
@@ -9,15 +9,15 @@ export class UserRepository {
     return null
   }
 
-  static async create(data: CreateUserRequest): Promise<User> {
+  static async createUser(data: CreateUserRequest): Promise<User> {
     throw new Error('Implementar com Prisma')
   }
 
-  static async update(id: string, data: UpdateUserRequest): Promise<User | null> {
+  static async updateUser(id: string, data: UpdateUserRequest): Promise<User | null> {
     throw new Error('Implementar com Prisma')
   }
 
-  static async delete(id: string): Promise<boolean> {
+  static async deleteUser(id: string): Promise<boolean> {
     throw new Error('Implementar com Prisma')
   }
 
@@ -26,6 +26,28 @@ export class UserRepository {
   }
 
   static async addPixHistory(userId: string, pixData: Omit<PixHistory, 'id' | 'userId' | 'createdAt'>): Promise<PixHistory> {
+    throw new Error('Implementar com Prisma')
+  }
+}
+
+export class ContaBancariaRepository {
+  static async findById(id: string): Promise<ContaBancaria | null> {
+    return null
+  }
+
+  static async findByConta(conta: string): Promise<ContaBancaria | null> {
+    return null
+  }
+
+  static async createContaBancaria(data: CreateContaBancariaRequest): Promise<ContaBancaria> {
+    throw new Error('Implementar com Prisma')
+  }
+
+  static async updateContaBancaria(id: string, data: UpdateContaBancariaRequest): Promise<ContaBancaria | null> {
+    throw new Error('Implementar com Prisma')
+  }
+
+  static async deleteContaBancaria(id: string): Promise<boolean> {
     throw new Error('Implementar com Prisma')
   }
 }
