@@ -3,7 +3,7 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import { usersRouter } from "./users/routes";
-import { contaBancariaRouter } from "./users/routes";
+import { bankAccountRouter } from "./users/routes";
 
 const app = new Elysia({
   prefix: "/v1",
@@ -27,7 +27,7 @@ const app = new Elysia({
     return redirect('/v1/docs')
 })  .get("/health", () => "OK")
   .use(usersRouter)
-  .use(contaBancariaRouter)
+  .use(bankAccountRouter)
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000/v1");
   });

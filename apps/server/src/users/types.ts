@@ -34,7 +34,7 @@ export interface UpdateUserRequest {
   cpf?: string
 }
 
-export interface ContaBancaria {
+export interface BankAccount {
   id: UUID
   userId: UUID
   banco: string
@@ -46,7 +46,7 @@ export interface ContaBancaria {
   updatedAt: Date
 }
 
-export interface CreateContaBancariaRequest {
+export interface CreateBankAccountRequest {
   banco: string
   agencia: string
   conta: string
@@ -54,7 +54,7 @@ export interface CreateContaBancariaRequest {
   tipoPessoa: "F" | "J"
 }
 
-export interface UpdateContaBancariaRequest {
+export interface UpdateBankAccountRequest {
   banco?: string
   agencia?: string
   conta?: string

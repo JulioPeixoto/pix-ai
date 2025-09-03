@@ -1,4 +1,4 @@
-import type { User, CreateUserRequest, UpdateUserRequest, PixHistory, ContaBancaria, CreateContaBancariaRequest, UpdateContaBancariaRequest } from './types'
+import type { User, CreateUserRequest, UpdateUserRequest, PixHistory, CreateBankAccountRequest, UpdateBankAccountRequest, BankAccount } from './types'
 
 export class UserRepository {
   static async findById(id: string): Promise<User | null> {
@@ -30,24 +30,24 @@ export class UserRepository {
   }
 }
 
-export class ContaBancariaRepository {
-  static async findById(id: string): Promise<ContaBancaria | null> {
+export class BankAccountRepository {
+  static async findById(id: string): Promise<BankAccount | null> {
     return null
   }
 
-  static async findByConta(conta: string): Promise<ContaBancaria | null> {
+  static async findByConta(conta: string): Promise<BankAccount | null> {
     return null
   }
 
-  static async createContaBancaria(data: CreateContaBancariaRequest): Promise<ContaBancaria> {
+  static async createBankAccount(data: CreateBankAccountRequest): Promise<BankAccount> {
     throw new Error('Implementar com Prisma')
   }
 
-  static async updateContaBancaria(id: string, data: UpdateContaBancariaRequest): Promise<ContaBancaria | null> {
+  static async updateBankAccount(id: string, data: UpdateBankAccountRequest): Promise<BankAccount | null> {
     throw new Error('Implementar com Prisma')
   }
 
-  static async deleteContaBancaria(id: string): Promise<boolean> {
+  static async deleteBankAccount(id: string): Promise<boolean> {
     throw new Error('Implementar com Prisma')
   }
 }

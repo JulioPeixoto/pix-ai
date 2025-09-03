@@ -18,7 +18,7 @@ export const UserParamsSchema = t.Object({
   id: t.String()
 })
 
-export const CreateContaBancariaSchema = t.Object({
+export const CreateBankAccountSchema = t.Object({
   userId: t.String(),
   banco: t.String({ minLength: 3 }),
   agencia: t.String({ minLength: 4 }),
@@ -27,7 +27,7 @@ export const CreateContaBancariaSchema = t.Object({
   tipoPessoa: t.Enum({ F: 'F', J: 'J' })
 })
 
-export const UpdateContaBancariaSchema = t.Object({
+export const UpdateBankAccountSchema = t.Object({
   banco: t.Optional(t.String({ minLength: 3 })),
   agencia: t.Optional(t.String({ minLength: 4 })),
   conta: t.Optional(t.String({ minLength: 4 })),
@@ -35,6 +35,6 @@ export const UpdateContaBancariaSchema = t.Object({
   tipoPessoa: t.Optional(t.Enum({ F: 'F', J: 'J' }))
 })
 
-export const ContaBancariaParamsSchema = t.Object({
+export const BankAccountParamsSchema = t.Object({
   contaBancariaId: t.String()
 })

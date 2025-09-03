@@ -1,12 +1,12 @@
 import { Elysia } from 'elysia'
-import { ContaBancariaService, UserService } from './service'
-import { ContaBancariaParamsSchema, CreateContaBancariaSchema, CreateUserSchema, UpdateContaBancariaSchema, UpdateUserSchema, UserParamsSchema } from './schema'
+import { BankAccountService, UserService } from './service'
+import { BankAccountParamsSchema, CreateBankAccountSchema, CreateUserSchema, UpdateBankAccountSchema, UpdateUserSchema, UserParamsSchema } from './schema'
 
 export const usersRouter = new Elysia({ prefix: '/users' })
   .get('/:id', async ({ params }) => {
     const user = await UserService.getUser(params.id)
     if (!user) {
-      throw new Error('Usuário não encontrado')
+      throw new Error('User not found')
     }
     return user
   }, {
@@ -38,25 +38,25 @@ export const usersRouter = new Elysia({ prefix: '/users' })
     params: UserParamsSchema
   })
 
-export const contaBancariaRouter = new Elysia({ prefix: '/conta-bancaria' })
+export const bankAccountRouter = new Elysia({ prefix: '/bank-account' })
   .get('/:id', async ({ params }) => {
-    return await ContaBancariaService.getContaBancaria(params.contaBancariaId)
+    return await BankAccountService.getBankAccount(params.contaBancariaId)
   }, {
-    params: ContaBancariaParamsSchema
+    params: BankAccountParamsSchema
   })
   .post('/', async ({ body }) => {
-    return await ContaBancariaService.createContaBancaria(body)
+    return await BankAccountService.createBankAccount(body)
   }, {
-    body: CreateContaBancariaSchema
+    body: CreateBankAccountSchema
   })
   .put('/:id', async ({ params, body }) => {
-    return await ContaBancariaService.updateContaBancaria(params.contaBancariaId, body)
+    return await BankAccountService.updateBankAccount(params.contaBancariaId, body)
   }, {
-    params: ContaBancariaParamsSchema,
-    body: UpdateContaBancariaSchema
+    params: BankAccountParamsSchema,
+    body: UpdateBankAccountSchema
   })
   .delete('/:id', async ({ params }) => {
-    return await ContaBancariaService.deleteContaBancaria(params.contaBancariaId)
+    return await BankAccountService.deleteBankAccount(params.contaBancariaId)
   }, {
-    params: ContaBancariaParamsSchema
+    params: BankAccountParamsSchema
   })

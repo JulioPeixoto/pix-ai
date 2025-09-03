@@ -1,5 +1,5 @@
-import { ContaBancariaRepository, UserRepository } from './repository'
-import type { User, CreateUserRequest, UpdateUserRequest, PixHistory, UpdateContaBancariaRequest, ContaBancaria, CreateContaBancariaRequest } from './types'
+import { BankAccountRepository, UserRepository } from './repository'
+import type { User, CreateUserRequest, UpdateUserRequest, PixHistory, UpdateBankAccountRequest, BankAccount, CreateBankAccountRequest } from './types'
 
 export class UserService {
     static async getUser(id: string): Promise<User | null> {
@@ -43,35 +43,35 @@ export class UserService {
 
 }
 
-export class ContaBancariaService {
-    static async getContaBancaria(id: string): Promise<ContaBancaria | null> {
-        return await ContaBancariaRepository.findById(id)
+export class BankAccountService {
+    static async getBankAccount(id: string): Promise<BankAccount | null> {
+        return await BankAccountRepository.findById(id)
     }
 
-    static async createContaBancaria(data: CreateContaBancariaRequest): Promise<ContaBancaria> {
-        const existingUser = await ContaBancariaRepository.findByConta(data.conta)
+    static async createBankAccount(data: CreateBankAccountRequest): Promise<BankAccount> {
+        const existingUser = await BankAccountRepository.findByConta(data.conta)
         if (existingUser) {
             throw new Error('Account already exists')
         }
 
-        return await ContaBancariaRepository.createContaBancaria(data)
+        return await BankAccountRepository.createBankAccount(data)
     }
 
-    static async updateContaBancaria(id: string, data: UpdateContaBancariaRequest): Promise<ContaBancaria | null> {
-        const user = await ContaBancariaRepository.findById(id)
+    static async updateBankAccount(id: string, data: UpdateBankAccountRequest): Promise<BankAccount | null> {
+        const user = await BankAccountRepository.findById(id)
         if (!user) {
             throw new Error('Account not found')
         }
 
-        return await ContaBancariaRepository.updateContaBancaria(id, data)
+        return await BankAccountRepository.updateBankAccount(id, data)
     }
 
-    static async deleteContaBancaria(id: string): Promise<boolean> {
-        const user = await ContaBancariaRepository.findById(id)
+    static async deleteBankAccount(id: string): Promise<boolean> {
+        const user = await BankAccountRepository.findById(id)
         if (!user) {
             throw new Error('Account not found')
         }
 
-        return await ContaBancariaRepository.deleteContaBancaria(id)
+        return await BankAccountRepository.deleteBankAccount(id)
     }
 }
