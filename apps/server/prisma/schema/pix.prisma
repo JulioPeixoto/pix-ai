@@ -1,0 +1,17 @@
+model PixTransaction {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  amount      Float
+  description String?
+  status      PixStatus
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  userId      String @db.ObjectId
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+enum PixStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
