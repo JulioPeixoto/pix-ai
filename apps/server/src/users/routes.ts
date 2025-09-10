@@ -1,6 +1,6 @@
 import { Elysia } from 'elysia'
-import { BankAccountService, UserService } from './service'
-import { BankAccountParamsSchema, CreateBankAccountSchema, CreateUserSchema, UpdateBankAccountSchema, UpdateUserSchema, UserParamsSchema } from './schema'
+import { UserService } from './service'
+import { CreateUserSchema, UpdateUserSchema, UserParamsSchema } from './schema'
 
 export const usersRouter = new Elysia({ prefix: '/users' })
   .get('/:id', async ({ params }) => {
@@ -38,25 +38,3 @@ export const usersRouter = new Elysia({ prefix: '/users' })
     params: UserParamsSchema
   })
 
-export const bankAccountRouter = new Elysia({ prefix: '/bank-account' })
-  .get('/:id', async ({ params }) => {
-    return await BankAccountService.getBankAccount(params.contaBancariaId)
-  }, {
-    params: BankAccountParamsSchema
-  })
-  .post('/', async ({ body }) => {
-    return await BankAccountService.createBankAccount(body)
-  }, {
-    body: CreateBankAccountSchema
-  })
-  .put('/:id', async ({ params, body }) => {
-    return await BankAccountService.updateBankAccount(params.contaBancariaId, body)
-  }, {
-    params: BankAccountParamsSchema,
-    body: UpdateBankAccountSchema
-  })
-  .delete('/:id', async ({ params }) => {
-    return await BankAccountService.deleteBankAccount(params.contaBancariaId)
-  }, {
-    params: BankAccountParamsSchema
-  })

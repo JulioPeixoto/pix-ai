@@ -3,7 +3,7 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import { usersRouter } from "./users/routes";
-import { bankAccountRouter } from "./users/routes";
+import { bankAccountRouter } from "./bank-account/routes";
 
 const app = new Elysia({
   prefix: "/v1",
