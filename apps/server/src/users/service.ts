@@ -1,5 +1,5 @@
-import { BankAccountRepository, UserRepository } from './repository'
-import type { User, CreateUserRequest, UpdateUserRequest, PixHistory, UpdateBankAccountRequest, BankAccount, CreateBankAccountRequest } from './types'
+import { UserRepository } from './repository'
+import type { User, CreateUserRequest, UpdateUserRequest, PixHistory } from './types'
 
 export class UserService {
     static async getUser(id: string): Promise<User | null> {
@@ -41,37 +41,4 @@ export class UserService {
         return await UserRepository.addPixHistory(userId, pixData)
     }
 
-}
-
-export class BankAccountService {
-    static async getBankAccount(id: string): Promise<BankAccount | null> {
-        return await BankAccountRepository.findById(id)
-    }
-
-    static async createBankAccount(data: CreateBankAccountRequest): Promise<BankAccount> {
-        const existingUser = await BankAccountRepository.findByConta(data.conta)
-        if (existingUser) {
-            throw new Error('Account already exists')
-        }
-
-        return await BankAccountRepository.createBankAccount(data)
-    }
-
-    static async updateBankAccount(id: string, data: UpdateBankAccountRequest): Promise<BankAccount | null> {
-        const user = await BankAccountRepository.findById(id)
-        if (!user) {
-            throw new Error('Account not found')
-        }
-
-        return await BankAccountRepository.updateBankAccount(id, data)
-    }
-
-    static async deleteBankAccount(id: string): Promise<boolean> {
-        const user = await BankAccountRepository.findById(id)
-        if (!user) {
-            throw new Error('Account not found')
-        }
-
-        return await BankAccountRepository.deleteBankAccount(id)
-    }
 }
