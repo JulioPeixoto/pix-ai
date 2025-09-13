@@ -13,6 +13,14 @@
 		"check-types": {
 			"dependsOn": ["^check-types"]
 		},
+		"format": {
+			"outputs": [],
+			"inputs": ["src/**", "external/**", ".prettierrc.json"]
+		},
+		"format:check": {
+			"outputs": [],
+			"inputs": ["src/**", "external/**", ".prettierrc.json"]
+		},
 		"dev": {
 			"cache": false,
 			"persistent": true

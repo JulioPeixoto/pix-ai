@@ -1,0 +1,46 @@
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Generated files
+apps/server/external/prisma/generated/
+*.generated.ts
+*.d.ts
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env*
+
+# Lock files
+bun.lock
+package-lock.json
+yarn.lock
+
+# Turbo
+.turbo/
+
+# Database
+*.db
+*.sqlite
+
+# Compiled binary
+server
+query_engine-*.dll.node

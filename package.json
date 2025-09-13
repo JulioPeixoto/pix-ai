@@ -1,10 +1,10 @@
 {
   "name": "pix-ai",
+  "devDependencies": {
+    "turbo": "^2.5.4"
+  },
+  "packageManager": "bun@1.2.19",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
@@ -15,11 +15,15 @@
     "db:push": "turbo -F server db:push",
     "db:studio": "turbo -F server db:studio",
     "db:generate": "turbo -F server db:generate",
-    "db:sync": "turbo -F server db:sync"
+    "db:sync": "turbo -F server db:sync",
+    "format": "turbo format",
+    "format:check": "turbo format:check"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "turbo": "^2.5.4"
-  },
-  "packageManager": "bun@1.2.19"
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
 }

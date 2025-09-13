@@ -1,15 +1,15 @@
-import type { User, CreateUserRequest, UpdateUserRequest, PixHistory } from './types'
-import db from '../../prisma'
+import type { User, CreateUserRequest, UpdateUserRequest, PixHistory } from "./types"
+import db from "../../external/prisma"
 
 export class UserRepository {
   static async findById(id: string): Promise<User | null> {
     try {
       const user = await db.user.findUnique({
-        where: { id }
+        where: { id },
       })
       return user
     } catch (error) {
-      console.error('Error finding user by id:', error)
+      console.error("Error finding user by id:", error)
       return null
     }
   }
@@ -17,11 +17,11 @@ export class UserRepository {
   static async findByEmail(email: string): Promise<User | null> {
     try {
       const user = await db.user.findUnique({
-        where: { email }
+        where: { email },
       })
       return user
     } catch (error) {
-      console.error('Error finding user by email:', error)
+      console.error("Error finding user by email:", error)
       return null
     }
   }
@@ -29,26 +29,26 @@ export class UserRepository {
   static async createUser(data: CreateUserRequest): Promise<User> {
     try {
       const existingEmail = await db.user.findFirst({
-        where: { email: data.email }
+        where: { email: data.email },
       })
       if (existingEmail) {
-        throw new Error('Email already in use')
+        throw new Error("Email already in use")
       }
 
       const existingCpf = await db.user.findFirst({
-        where: { cpf: data.cpf }
+        where: { cpf: data.cpf },
       })
       if (existingCpf) {
-        throw new Error('CPF already in use')
+        throw new Error("CPF already in use")
       }
 
       const user = await db.user.create({
-        data
+        data,
       })
       return user
     } catch (error) {
-      console.error('Error creating user:', error)
-      throw new Error('Failed to create user')
+      console.error("Error creating user:", error)
+      throw new Error("Failed to create user")
     }
   }
 
@@ -56,11 +56,11 @@ export class UserRepository {
     try {
       const user = await db.user.update({
         where: { id },
-        data
+        data,
       })
       return user
     } catch (error) {
-      console.error('Error updating user:', error)
+      console.error("Error updating user:", error)
       return null
     }
   }
@@ -68,11 +68,11 @@ export class UserRepository {
   static async deleteUser(id: string): Promise<User> {
     try {
       return await db.user.delete({
-        where: { id }
+        where: { id },
       })
     } catch (error) {
-      console.error('Error deleting user:', error)
-      throw new Error('Failed to delete user')
+      console.error("Error deleting user:", error)
+      throw new Error("Failed to delete user")
     }
   }
 
@@ -83,14 +83,14 @@ export class UserRepository {
         include: {
           pixTransactions: {
             take: limit,
-            orderBy: { createdAt: 'desc' }
-          }
-        }
+            orderBy: { createdAt: "desc" },
+          },
+        },
       })
 
       return userAccounts.flatMap(account => account.pixTransactions)
     } catch (error) {
-      console.error('Error getting pix history:', error)
+      console.error("Error getting pix history:", error)
       return []
     }
   }
