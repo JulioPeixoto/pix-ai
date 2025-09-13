@@ -1,5 +1,5 @@
 import type { User, CreateUserRequest, UpdateUserRequest, PixHistory } from './types'
-import db from '../../prisma'
+import db from '../../external/prisma'
 
 export class UserRepository {
   static async findById(id: string): Promise<User | null> {

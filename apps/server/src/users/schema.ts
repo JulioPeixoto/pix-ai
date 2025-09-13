@@ -2,7 +2,7 @@ import {
   UserPlain,
   UserPlainInputCreate,
   UserPlainInputUpdate 
-} from '../../prisma/generated/prismabox/User'
+} from '../../external/prisma/generated/prismabox/User'
 
 export const CreateUserSchema = UserPlainInputCreate
 export const UpdateUserSchema = UserPlainInputUpdate

@@ -1,4 +1,4 @@
-import db from '../../../prisma'
+import db from '../../../external/prisma'
 import type { BankAccount, CreateBankAccountRequest, UpdateBankAccountRequest } from './types'
 
 export class BankAccountRepository {
