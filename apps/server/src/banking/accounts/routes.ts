@@ -2,7 +2,7 @@ import { Elysia } from 'elysia'
 import { BankAccountService } from './service'
 import { BankAccountParamsSchema, CreateBankAccountSchema, UpdateBankAccountSchema } from './schema'
 
-export const bankAccountRouter = new Elysia({ prefix: '/bank-account' })
+export const bankAccountRouter = new Elysia({ prefix: '/accounts' })
   .get('/:id', async ({ params }) => {
     return await BankAccountService.getBankAccount(params.id)
   }, {
