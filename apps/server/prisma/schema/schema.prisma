@@ -4,6 +4,14 @@ generator client {
   moduleFormat = "esm"
 }
 
+generator prismabox {
+  provider = "prismabox"
+  typeboxImportDependencyName = "elysia"
+  typeboxImportVariableName = "t"
+  inputModel = true
+  output   = "../generated/prismabox"
+}
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")

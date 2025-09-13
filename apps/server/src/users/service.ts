@@ -24,12 +24,11 @@ export class UserService {
         return await UserRepository.updateUser(id, data)
     }
 
-    static async deleteUser(id: string): Promise<boolean> {
+    static async deleteUser(id: string): Promise<User> {
         const user = await UserRepository.findById(id)
         if (!user) {
             throw new Error('User not found')
         }
-
         return await UserRepository.deleteUser(id)
     }
 
@@ -37,7 +36,7 @@ export class UserService {
         return await UserRepository.getPixHistory(userId)
     }
 
-    static async addToPixHistory(userId: string, pixData: { recipientName: string, recipientPixKey: string, amount: number, description?: string }): Promise<PixHistory> {
+    static async addToPixHistory(userId: string, pixData: Omit<PixHistory, 'id' | 'userId' | 'createdAt'>): Promise<PixHistory> {
         return await UserRepository.addPixHistory(userId, pixData)
     }
 

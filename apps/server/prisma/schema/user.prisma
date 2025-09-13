@@ -3,9 +3,10 @@ model User {
   name     String
   email    String @unique
   pixKey   String
+  cpf      String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
   // Relations
-  pixTransactions PixTransaction[]
+  bankAccounts    BankAccount[]
 }

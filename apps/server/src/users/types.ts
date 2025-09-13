@@ -1,35 +1,6 @@
-import type { UUID } from "node:crypto"
+import type { Prisma } from '../../prisma/generated/client'
 
-export interface User {
-  id: UUID
-  name: string
-  email: string
-  pixKey: string
-  cpf: string
-  createdAt: Date
-  updatedAt: Date
-}
+export type { User, PixTransaction as PixHistory } from '../../prisma/generated/client'
 
-export interface PixHistory {
-  id: string
-  userId: string
-  recipientName: string
-  recipientPixKey: string
-  amount: number
-  description?: string
-  createdAt: Date
-}
-
-export interface CreateUserRequest {
-  name: string
-  email: string
-  pixKey: string
-  cpf: string
-}
-
-export interface UpdateUserRequest {
-  name?: string
-  email?: string
-  pixKey?: string
-  cpf?: string
-}
+export type CreateUserRequest = Prisma.UserCreateInput
+export type UpdateUserRequest = Prisma.UserUpdateInput

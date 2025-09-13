@@ -1,18 +1,12 @@
-import { t } from 'elysia'
+import { 
+  UserPlain,
+  UserPlainInputCreate,
+  UserPlainInputUpdate 
+} from '../../prisma/generated/prismabox/User'
 
-export const CreateUserSchema = t.Object({
-  name: t.String({ minLength: 2 }),
-  email: t.String({ format: 'email' }),
-  pixKey: t.String({ minLength: 11 }),
-  cpf: t.String({ minLength: 11 })
-})
-
-export const UpdateUserSchema = t.Object({
-  name: t.Optional(t.String({ minLength: 2 })),
-  email: t.Optional(t.String({ format: 'email' })),
-  pixKey: t.Optional(t.String({ minLength: 11 })),
-  cpf: t.Optional(t.String({ minLength: 11 }))
-})
+export const CreateUserSchema = UserPlainInputCreate
+export const UpdateUserSchema = UserPlainInputUpdate
+export const UserResponseSchema = UserPlain
 
 export const UserParamsSchema = t.Object({
   id: t.String()

@@ -1,13 +1,15 @@
 model PixTransaction {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  amount      Float
-  description String?
-  status      PixStatus
-  createdAt   DateTime @default(now())
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  amount          Float
+  description     String?
+  status          PixStatus
+  recipientName   String
+  recipientPixKey String
+  createdAt       DateTime @default(now())
   
-  // Relations
-  userId      String @db.ObjectId
-  user        User   @relation(fields: [userId], references: [id])
+  // Relations - APENAS com conta bancária
+  bankAccountId   String @db.ObjectId
+  bankAccount     BankAccount @relation(fields: [bankAccountId], references: [id])
 }
 
 enum PixStatus {
