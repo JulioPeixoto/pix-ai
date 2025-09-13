@@ -1,7 +1,7 @@
 import type { UUID } from "node:crypto"
 
 export interface User {
-  id: UUID
+  id: string
   name: string
   email: string
   pixKey: string
@@ -16,7 +16,7 @@ export interface PixHistory {
   recipientName: string
   recipientPixKey: string
   amount: number
-  description?: string
+  description: string | null
   createdAt: Date
 }
 

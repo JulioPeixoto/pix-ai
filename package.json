@@ -15,7 +15,7 @@
     "db:push": "turbo -F server db:push",
     "db:studio": "turbo -F server db:studio",
     "db:generate": "turbo -F server db:generate",
-    "db:migrate": "turbo -F server db:migrate"
+    "db:sync": "turbo -F server db:sync"
   },
   "dependencies": {},
   "devDependencies": {

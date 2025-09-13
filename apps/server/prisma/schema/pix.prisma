@@ -1,9 +1,11 @@
 model PixTransaction {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  amount      Float
-  description String?
-  status      PixStatus
-  createdAt   DateTime @default(now())
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  amount          Float
+  description     String?
+  status          PixStatus
+  recipientName   String
+  recipientPixKey String
+  createdAt       DateTime @default(now())
   
   // Relations
   userId      String @db.ObjectId
