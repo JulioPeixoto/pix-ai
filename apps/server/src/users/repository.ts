@@ -1,11 +1,10 @@
 import type { User, CreateUserRequest, UpdateUserRequest, PixHistory } from './types'
-import prisma from '../../prisma'
-import { PixStatus } from '../../prisma/generated/enums'
+import db from '../../prisma'
 
 export class UserRepository {
   static async findById(id: string): Promise<User | null> {
     try {
-      const user = await prisma.user.findUnique({
+      const user = await db.user.findUnique({
         where: { id }
       })
       return user
@@ -17,7 +16,7 @@ export class UserRepository {
 
   static async findByEmail(email: string): Promise<User | null> {
     try {
-      const user = await prisma.user.findUnique({
+      const user = await db.user.findUnique({
         where: { email }
       })
       return user
@@ -29,22 +28,21 @@ export class UserRepository {
 
   static async createUser(data: CreateUserRequest): Promise<User> {
     try {
-      
-      const existingEmail = await prisma.user.findFirst({
+      const existingEmail = await db.user.findFirst({
         where: { email: data.email }
       })
       if (existingEmail) {
         throw new Error('Email already in use')
       }
 
-      const existingCpf = await prisma.user.findFirst({
+      const existingCpf = await db.user.findFirst({
         where: { cpf: data.cpf }
       })
       if (existingCpf) {
         throw new Error('CPF already in use')
       }
 
-      const user = await prisma.user.create({
+      const user = await db.user.create({
         data
       })
       return user
@@ -56,7 +54,7 @@ export class UserRepository {
 
   static async updateUser(id: string, data: UpdateUserRequest): Promise<User | null> {
     try {
-      const user = await prisma.user.update({
+      const user = await db.user.update({
         where: { id },
         data
       })
@@ -69,7 +67,7 @@ export class UserRepository {
 
   static async deleteUser(id: string): Promise<User> {
     try {
-      return await prisma.user.delete({
+      return await db.user.delete({
         where: { id }
       })
     } catch (error) {
@@ -80,31 +78,20 @@ export class UserRepository {
 
   static async getPixHistory(userId: string, limit = 10): Promise<PixHistory[]> {
     try {
-      const transactions = await prisma.pixTransaction.findMany({
+      const userAccounts = await db.bankAccount.findMany({
         where: { userId },
-        take: limit,
-        orderBy: { createdAt: 'desc' }
+        include: {
+          pixTransactions: {
+            take: limit,
+            orderBy: { createdAt: 'desc' }
+          }
+        }
       })
-      return transactions
+
+      return userAccounts.flatMap(account => account.pixTransactions)
     } catch (error) {
       console.error('Error getting pix history:', error)
       return []
-    }
-  }
-
-  static async addPixHistory(userId: string, pixData: Omit<PixHistory, 'id' | 'userId' | 'createdAt'>): Promise<PixHistory> {
-    try {
-      const transaction = await prisma.pixTransaction.create({
-        data: {
-          ...pixData,
-          userId,
-          status: PixStatus.PENDING
-        }
-      })
-      return transaction
-    } catch (error) {
-      console.error('Error adding pix history:', error)
-      throw new Error('Failed to add pix transaction')
     }
   }
 }

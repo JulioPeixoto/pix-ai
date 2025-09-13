@@ -8,5 +8,5 @@ model User {
   updatedAt DateTime @updatedAt
   
   // Relations
-  pixTransactions PixTransaction[]
+  bankAccounts    BankAccount[]
 }

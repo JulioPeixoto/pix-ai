@@ -7,7 +7,7 @@ export class BankAccountService {
   }
 
   static async createBankAccount(data: CreateBankAccountRequest): Promise<BankAccount> {
-    const existingAccount = await BankAccountRepository.findByConta(data.conta)
+    const existingAccount = await BankAccountRepository.findByConta(data.banco, data.agencia, data.conta, data.cpfCnpj)
     if (existingAccount) {
       throw new Error('Account already exists')
     }
