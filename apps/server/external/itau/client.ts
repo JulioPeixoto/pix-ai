@@ -1,5 +1,5 @@
-import { itauConfig } from './config'
-import type { RequestConfig } from './types'
+import { itauConfig } from "./config"
+import type { RequestConfig } from "./types"
 
 export class ItauClient {
   private token?: string
@@ -14,15 +14,15 @@ export class ItauClient {
   private async authenticate(): Promise<void> {
     try {
       const response = await fetch(`${this.baseUrl}/oauth/token`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams({
-          grant_type: 'client_credentials',
-          client_id: itauConfig.clientId || '',
-          client_secret: itauConfig.clientSecret || ''
-        })
+          grant_type: "client_credentials",
+          client_id: itauConfig.clientId || "",
+          client_secret: itauConfig.clientSecret || "",
+        }),
       })
 
       if (!response.ok) {
@@ -32,7 +32,7 @@ export class ItauClient {
       const data = await response.json()
       this.token = data.access_token
     } catch (error) {
-      console.error('Error authenticating with Itaú:', error)
+      console.error("Error authenticating with Itaú:", error)
       throw error
     }
   }
@@ -44,15 +44,15 @@ export class ItauClient {
 
     const url = `${this.baseUrl}${endpoint}`
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`,
-      ...config.headers
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${this.token}`,
+      ...config.headers,
     }
 
     const requestInit: RequestInit = {
       method: config.method,
       headers,
-      body: config.body ? JSON.stringify(config.body) : undefined
+      body: config.body ? JSON.stringify(config.body) : undefined,
     }
 
     try {
@@ -61,11 +61,11 @@ export class ItauClient {
       if (response.status === 401) {
         this.token = undefined
         await this.authenticate()
-        
+
         headers.Authorization = `Bearer ${this.token}`
         const retryResponse = await fetch(url, {
           ...requestInit,
-          headers
+          headers,
         })
 
         if (!retryResponse.ok) {
@@ -87,18 +87,18 @@ export class ItauClient {
   }
 
   async get<T>(endpoint: string): Promise<T> {
-    return this.makeRequest<T>(endpoint, { method: 'GET' })
+    return this.makeRequest<T>(endpoint, { method: "GET" })
   }
 
   async post<T>(endpoint: string, data: any): Promise<T> {
-    return this.makeRequest<T>(endpoint, { method: 'POST', body: data })
+    return this.makeRequest<T>(endpoint, { method: "POST", body: data })
   }
 
   async put<T>(endpoint: string, data: any): Promise<T> {
-    return this.makeRequest<T>(endpoint, { method: 'PUT', body: data })
+    return this.makeRequest<T>(endpoint, { method: "PUT", body: data })
   }
 
   async delete<T>(endpoint: string): Promise<T> {
-    return this.makeRequest<T>(endpoint, { method: 'DELETE' })
+    return this.makeRequest<T>(endpoint, { method: "DELETE" })
   }
 }

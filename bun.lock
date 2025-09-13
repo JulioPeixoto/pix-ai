@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "pix-ai",
+      "dependencies": {
+        "prettier": "^3.6.2",
+      },
       "devDependencies": {
         "turbo": "^2.5.4",
       },
@@ -16,6 +19,7 @@
         "bullmq": "^5.58.5",
         "dotenv": "^17.2.1",
         "elysia": "^1.2.25",
+        "ioredis": "^5.7.0",
         "prismabox": "^1.1.25",
         "zod": "^4.0.2",
       },

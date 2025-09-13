@@ -7,7 +7,7 @@ export interface PixTransferRequest {
 
 export interface PixTransferResponse {
   transactionId: string
-  status: 'PENDING' | 'COMPLETED' | 'FAILED'
+  status: "PENDING" | "COMPLETED" | "FAILED"
   valor: number
   dataHora: string
 }
@@ -15,14 +15,14 @@ export interface PixTransferResponse {
 export interface AutorizacaoRequest {
   chavePix: string
   valor: number
-  periodicidade: 'MENSAL' | 'SEMANAL' | 'ANUAL'
+  periodicidade: "MENSAL" | "SEMANAL" | "ANUAL"
   dataInicio: string
   dataFim?: string
 }
 
 export interface AutorizacaoResponse {
   id: string
-  status: 'ATIVA' | 'CANCELADA' | 'PAUSADA'
+  status: "ATIVA" | "CANCELADA" | "PAUSADA"
   chavePix: string
   valor: number
   periodicidade: string
@@ -44,7 +44,7 @@ export interface QRCodeResponse {
 }
 
 export interface RequestConfig {
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE'
-    headers?: Record<string, string>
-    body?: any
-  }
+  method: "GET" | "POST" | "PUT" | "DELETE"
+  headers?: Record<string, string>
+  body?: any
+}
