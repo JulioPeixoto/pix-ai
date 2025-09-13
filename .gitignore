@@ -1,2 +1,46 @@
-node_modules
-.turbo
+# Dependencies
+node_modules/
+.bun/
+
+# Build outputs
+dist/
+build/
+.next/
+.turbo/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Prisma
+apps/server/prisma/generated/
+
+# Database
+*.db
+*.sqlite
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+.tmp/
+temp/
