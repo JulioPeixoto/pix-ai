@@ -1,33 +1,6 @@
-export interface User {
-  id: string
-  name: string
-  email: string
-  pixKey: string
-  cpf: string
-  createdAt: Date
-  updatedAt: Date
-}
+import type { Prisma } from '../../prisma/generated/client'
 
-export interface PixHistory {
-  id: string
-  bankAccountId: string
-  recipientName: string
-  recipientPixKey: string
-  amount: number
-  description: string | null
-  createdAt: Date
-}
+export type { User, PixTransaction as PixHistory } from '../../prisma/generated/client'
 
-export interface CreateUserRequest {
-  name: string
-  email: string
-  pixKey: string
-  cpf: string
-}
-
-export interface UpdateUserRequest {
-  name?: string
-  email?: string
-  pixKey?: string
-  cpf?: string
-}
+export type CreateUserRequest = Prisma.UserCreateInput
+export type UpdateUserRequest = Prisma.UserUpdateInput
