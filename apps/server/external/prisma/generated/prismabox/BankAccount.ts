@@ -1,8 +1,8 @@
-import { t } from "elysia"
+import { t } from "elysia";
 
-import { __transformDate__ } from "./__transformDate__"
+import { __transformDate__ } from "./__transformDate__";
 
-import { __nullable__ } from "./__nullable__"
+import { __nullable__ } from "./__nullable__";
 
 export const BankAccountPlain = t.Object(
   {
@@ -12,7 +12,7 @@ export const BankAccountPlain = t.Object(
     agencia: t.String(),
     conta: t.String(),
     digito: __nullable__(t.String()),
-    tipo: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
+    tipoConta: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
       additionalProperties: false,
     }),
     tipoPessoa: t.Union([t.Literal("F"), t.Literal("J")], {
@@ -25,8 +25,8 @@ export const BankAccountPlain = t.Object(
     createdAt: t.Date(),
     updatedAt: t.Date(),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const BankAccountRelations = t.Object(
   {
@@ -40,7 +40,7 @@ export const BankAccountRelations = t.Object(
         createdAt: t.Date(),
         updatedAt: t.Date(),
       },
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
     pixTransactions: t.Array(
       t.Object(
@@ -48,21 +48,46 @@ export const BankAccountRelations = t.Object(
           id: t.String(),
           amount: t.Number(),
           description: __nullable__(t.String()),
-          status: t.Union([t.Literal("PENDING"), t.Literal("COMPLETED"), t.Literal("FAILED")], {
-            additionalProperties: false,
-          }),
+          status: t.Union(
+            [
+              t.Literal("PENDING"),
+              t.Literal("COMPLETED"),
+              t.Literal("FAILED"),
+              t.Literal("CANCELLED"),
+              t.Literal("EXPIRED"),
+            ],
+            { additionalProperties: false },
+          ),
           recipientName: t.String(),
           recipientPixKey: t.String(),
+          transactionId: __nullable__(t.String()),
+          externalStatus: __nullable__(t.String()),
+          isRecurring: t.Boolean(),
+          periodicidade: __nullable__(
+            t.Union(
+              [t.Literal("MENSAL"), t.Literal("SEMANAL"), t.Literal("ANUAL")],
+              { additionalProperties: false },
+            ),
+          ),
+          dataInicio: __nullable__(t.Date()),
+          dataFim: __nullable__(t.Date()),
+          autorizacaoId: __nullable__(t.String()),
+          qrCode: __nullable__(t.String()),
+          txId: __nullable__(t.String()),
+          expiracaoEm: __nullable__(t.Date()),
+          expiracaoMinutos: __nullable__(t.Integer()),
           createdAt: t.Date(),
+          updatedAt: t.Date(),
+          processedAt: __nullable__(t.Date()),
           bankAccountId: t.String(),
         },
-        { additionalProperties: false }
+        { additionalProperties: false },
       ),
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const BankAccountPlainInputCreate = t.Object(
   {
@@ -70,7 +95,7 @@ export const BankAccountPlainInputCreate = t.Object(
     agencia: t.String(),
     conta: t.String(),
     digito: t.Optional(__nullable__(t.String())),
-    tipo: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
+    tipoConta: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
       additionalProperties: false,
     }),
     tipoPessoa: t.Union([t.Literal("F"), t.Literal("J")], {
@@ -81,8 +106,8 @@ export const BankAccountPlainInputCreate = t.Object(
     ativa: t.Optional(t.Boolean()),
     validada: t.Optional(t.Boolean()),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const BankAccountPlainInputUpdate = t.Object(
   {
@@ -90,23 +115,23 @@ export const BankAccountPlainInputUpdate = t.Object(
     agencia: t.Optional(t.String()),
     conta: t.Optional(t.String()),
     digito: t.Optional(__nullable__(t.String())),
-    tipo: t.Optional(
+    tipoConta: t.Optional(
       t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
         additionalProperties: false,
-      })
+      }),
     ),
     tipoPessoa: t.Optional(
       t.Union([t.Literal("F"), t.Literal("J")], {
         additionalProperties: false,
-      })
+      }),
     ),
     titular: t.Optional(t.String()),
     cpfCnpj: t.Optional(t.String()),
     ativa: t.Optional(t.Boolean()),
     validada: t.Optional(t.Boolean()),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const BankAccountRelationsInputCreate = t.Object(
   {
@@ -116,10 +141,10 @@ export const BankAccountRelationsInputCreate = t.Object(
           {
             id: t.String({ additionalProperties: false }),
           },
-          { additionalProperties: false }
+          { additionalProperties: false },
         ),
       },
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
     pixTransactions: t.Optional(
       t.Object(
@@ -129,17 +154,17 @@ export const BankAccountRelationsInputCreate = t.Object(
               {
                 id: t.String({ additionalProperties: false }),
               },
-              { additionalProperties: false }
+              { additionalProperties: false },
             ),
-            { additionalProperties: false }
+            { additionalProperties: false },
           ),
         },
-        { additionalProperties: false }
-      )
+        { additionalProperties: false },
+      ),
     ),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const BankAccountRelationsInputUpdate = t.Partial(
   t.Object(
@@ -150,10 +175,10 @@ export const BankAccountRelationsInputUpdate = t.Partial(
             {
               id: t.String({ additionalProperties: false }),
             },
-            { additionalProperties: false }
+            { additionalProperties: false },
           ),
         },
-        { additionalProperties: false }
+        { additionalProperties: false },
       ),
       pixTransactions: t.Partial(
         t.Object(
@@ -163,31 +188,31 @@ export const BankAccountRelationsInputUpdate = t.Partial(
                 {
                   id: t.String({ additionalProperties: false }),
                 },
-                { additionalProperties: false }
+                { additionalProperties: false },
               ),
-              { additionalProperties: false }
+              { additionalProperties: false },
             ),
             disconnect: t.Array(
               t.Object(
                 {
                   id: t.String({ additionalProperties: false }),
                 },
-                { additionalProperties: false }
+                { additionalProperties: false },
               ),
-              { additionalProperties: false }
+              { additionalProperties: false },
             ),
           },
-          { additionalProperties: false }
-        )
+          { additionalProperties: false },
+        ),
       ),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const BankAccountWhere = t.Partial(
   t.Recursive(
-    Self =>
+    (Self) =>
       t.Object(
         {
           AND: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
@@ -199,9 +224,10 @@ export const BankAccountWhere = t.Partial(
           agencia: t.String(),
           conta: t.String(),
           digito: t.String(),
-          tipo: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
-            additionalProperties: false,
-          }),
+          tipoConta: t.Union(
+            [t.Literal("CC"), t.Literal("CP"), t.Literal("PP")],
+            { additionalProperties: false },
+          ),
           tipoPessoa: t.Union([t.Literal("F"), t.Literal("J")], {
             additionalProperties: false,
           }),
@@ -212,14 +238,14 @@ export const BankAccountWhere = t.Partial(
           createdAt: t.Date(),
           updatedAt: t.Date(),
         },
-        { additionalProperties: false }
+        { additionalProperties: false },
       ),
-    { $id: "BankAccount" }
-  )
-)
+    { $id: "BankAccount" },
+  ),
+);
 
 export const BankAccountWhereUnique = t.Recursive(
-  Self =>
+  (Self) =>
     t.Intersect(
       [
         t.Partial(
@@ -233,12 +259,12 @@ export const BankAccountWhereUnique = t.Recursive(
                   conta: t.String(),
                   cpfCnpj: t.String(),
                 },
-                { additionalProperties: false }
+                { additionalProperties: false },
               ),
             },
-            { additionalProperties: false }
+            { additionalProperties: false },
           ),
-          { additionalProperties: false }
+          { additionalProperties: false },
         ),
         t.Union(
           [
@@ -251,19 +277,25 @@ export const BankAccountWhereUnique = t.Recursive(
                   conta: t.String(),
                   cpfCnpj: t.String(),
                 },
-                { additionalProperties: false }
+                { additionalProperties: false },
               ),
             }),
           ],
-          { additionalProperties: false }
+          { additionalProperties: false },
         ),
         t.Partial(
           t.Object({
-            AND: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
-            NOT: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
+            AND: t.Union([
+              Self,
+              t.Array(Self, { additionalProperties: false }),
+            ]),
+            NOT: t.Union([
+              Self,
+              t.Array(Self, { additionalProperties: false }),
+            ]),
             OR: t.Array(Self, { additionalProperties: false }),
           }),
-          { additionalProperties: false }
+          { additionalProperties: false },
         ),
         t.Partial(
           t.Object(
@@ -274,7 +306,10 @@ export const BankAccountWhereUnique = t.Recursive(
               agencia: t.String(),
               conta: t.String(),
               digito: t.String(),
-              tipo: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], { additionalProperties: false }),
+              tipoConta: t.Union(
+                [t.Literal("CC"), t.Literal("CP"), t.Literal("PP")],
+                { additionalProperties: false },
+              ),
               tipoPessoa: t.Union([t.Literal("F"), t.Literal("J")], {
                 additionalProperties: false,
               }),
@@ -285,14 +320,14 @@ export const BankAccountWhereUnique = t.Recursive(
               createdAt: t.Date(),
               updatedAt: t.Date(),
             },
-            { additionalProperties: false }
-          )
+            { additionalProperties: false },
+          ),
         ),
       ],
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
-  { $id: "BankAccount" }
-)
+  { $id: "BankAccount" },
+);
 
 export const BankAccountSelect = t.Partial(
   t.Object(
@@ -303,7 +338,7 @@ export const BankAccountSelect = t.Partial(
       agencia: t.Boolean(),
       conta: t.Boolean(),
       digito: t.Boolean(),
-      tipo: t.Boolean(),
+      tipoConta: t.Boolean(),
       tipoPessoa: t.Boolean(),
       titular: t.Boolean(),
       cpfCnpj: t.Boolean(),
@@ -315,22 +350,22 @@ export const BankAccountSelect = t.Partial(
       pixTransactions: t.Boolean(),
       _count: t.Boolean(),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const BankAccountInclude = t.Partial(
   t.Object(
     {
-      tipo: t.Boolean(),
+      tipoConta: t.Boolean(),
       tipoPessoa: t.Boolean(),
       user: t.Boolean(),
       pixTransactions: t.Boolean(),
       _count: t.Boolean(),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const BankAccountOrderBy = t.Partial(
   t.Object(
@@ -372,16 +407,21 @@ export const BankAccountOrderBy = t.Partial(
         additionalProperties: false,
       }),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
-export const BankAccount = t.Composite([BankAccountPlain, BankAccountRelations], { additionalProperties: false })
+export const BankAccount = t.Composite(
+  [BankAccountPlain, BankAccountRelations],
+  { additionalProperties: false },
+);
 
-export const BankAccountInputCreate = t.Composite([BankAccountPlainInputCreate, BankAccountRelationsInputCreate], {
-  additionalProperties: false,
-})
+export const BankAccountInputCreate = t.Composite(
+  [BankAccountPlainInputCreate, BankAccountRelationsInputCreate],
+  { additionalProperties: false },
+);
 
-export const BankAccountInputUpdate = t.Composite([BankAccountPlainInputUpdate, BankAccountRelationsInputUpdate], {
-  additionalProperties: false,
-})
+export const BankAccountInputUpdate = t.Composite(
+  [BankAccountPlainInputUpdate, BankAccountRelationsInputUpdate],
+  { additionalProperties: false },
+);

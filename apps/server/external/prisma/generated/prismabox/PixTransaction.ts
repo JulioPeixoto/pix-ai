@@ -1,24 +1,48 @@
-import { t } from "elysia"
+import { t } from "elysia";
 
-import { __transformDate__ } from "./__transformDate__"
+import { __transformDate__ } from "./__transformDate__";
 
-import { __nullable__ } from "./__nullable__"
+import { __nullable__ } from "./__nullable__";
 
 export const PixTransactionPlain = t.Object(
   {
     id: t.String(),
     amount: t.Number(),
     description: __nullable__(t.String()),
-    status: t.Union([t.Literal("PENDING"), t.Literal("COMPLETED"), t.Literal("FAILED")], {
-      additionalProperties: false,
-    }),
+    status: t.Union(
+      [
+        t.Literal("PENDING"),
+        t.Literal("COMPLETED"),
+        t.Literal("FAILED"),
+        t.Literal("CANCELLED"),
+        t.Literal("EXPIRED"),
+      ],
+      { additionalProperties: false },
+    ),
     recipientName: t.String(),
     recipientPixKey: t.String(),
+    transactionId: __nullable__(t.String()),
+    externalStatus: __nullable__(t.String()),
+    isRecurring: t.Boolean(),
+    periodicidade: __nullable__(
+      t.Union([t.Literal("MENSAL"), t.Literal("SEMANAL"), t.Literal("ANUAL")], {
+        additionalProperties: false,
+      }),
+    ),
+    dataInicio: __nullable__(t.Date()),
+    dataFim: __nullable__(t.Date()),
+    autorizacaoId: __nullable__(t.String()),
+    qrCode: __nullable__(t.String()),
+    txId: __nullable__(t.String()),
+    expiracaoEm: __nullable__(t.Date()),
+    expiracaoMinutos: __nullable__(t.Integer()),
     createdAt: t.Date(),
+    updatedAt: t.Date(),
+    processedAt: __nullable__(t.Date()),
     bankAccountId: t.String(),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const PixTransactionRelations = t.Object(
   {
@@ -30,9 +54,10 @@ export const PixTransactionRelations = t.Object(
         agencia: t.String(),
         conta: t.String(),
         digito: __nullable__(t.String()),
-        tipo: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
-          additionalProperties: false,
-        }),
+        tipoConta: t.Union(
+          [t.Literal("CC"), t.Literal("CP"), t.Literal("PP")],
+          { additionalProperties: false },
+        ),
         tipoPessoa: t.Union([t.Literal("F"), t.Literal("J")], {
           additionalProperties: false,
         }),
@@ -43,37 +68,85 @@ export const PixTransactionRelations = t.Object(
         createdAt: t.Date(),
         updatedAt: t.Date(),
       },
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const PixTransactionPlainInputCreate = t.Object(
   {
     amount: t.Number(),
     description: t.Optional(__nullable__(t.String())),
-    status: t.Union([t.Literal("PENDING"), t.Literal("COMPLETED"), t.Literal("FAILED")], {
-      additionalProperties: false,
-    }),
+    status: t.Union(
+      [
+        t.Literal("PENDING"),
+        t.Literal("COMPLETED"),
+        t.Literal("FAILED"),
+        t.Literal("CANCELLED"),
+        t.Literal("EXPIRED"),
+      ],
+      { additionalProperties: false },
+    ),
     recipientName: t.String(),
     recipientPixKey: t.String(),
+    externalStatus: t.Optional(__nullable__(t.String())),
+    isRecurring: t.Optional(t.Boolean()),
+    periodicidade: t.Optional(
+      __nullable__(
+        t.Union(
+          [t.Literal("MENSAL"), t.Literal("SEMANAL"), t.Literal("ANUAL")],
+          { additionalProperties: false },
+        ),
+      ),
+    ),
+    dataInicio: t.Optional(__nullable__(t.Date())),
+    dataFim: t.Optional(__nullable__(t.Date())),
+    qrCode: t.Optional(__nullable__(t.String())),
+    expiracaoEm: t.Optional(__nullable__(t.Date())),
+    expiracaoMinutos: t.Optional(__nullable__(t.Integer())),
+    processedAt: t.Optional(__nullable__(t.Date())),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const PixTransactionPlainInputUpdate = t.Object(
   {
     amount: t.Optional(t.Number()),
     description: t.Optional(__nullable__(t.String())),
     status: t.Optional(
-      t.Union([t.Literal("PENDING"), t.Literal("COMPLETED"), t.Literal("FAILED")], { additionalProperties: false })
+      t.Union(
+        [
+          t.Literal("PENDING"),
+          t.Literal("COMPLETED"),
+          t.Literal("FAILED"),
+          t.Literal("CANCELLED"),
+          t.Literal("EXPIRED"),
+        ],
+        { additionalProperties: false },
+      ),
     ),
     recipientName: t.Optional(t.String()),
     recipientPixKey: t.Optional(t.String()),
+    externalStatus: t.Optional(__nullable__(t.String())),
+    isRecurring: t.Optional(t.Boolean()),
+    periodicidade: t.Optional(
+      __nullable__(
+        t.Union(
+          [t.Literal("MENSAL"), t.Literal("SEMANAL"), t.Literal("ANUAL")],
+          { additionalProperties: false },
+        ),
+      ),
+    ),
+    dataInicio: t.Optional(__nullable__(t.Date())),
+    dataFim: t.Optional(__nullable__(t.Date())),
+    qrCode: t.Optional(__nullable__(t.String())),
+    expiracaoEm: t.Optional(__nullable__(t.Date())),
+    expiracaoMinutos: t.Optional(__nullable__(t.Integer())),
+    processedAt: t.Optional(__nullable__(t.Date())),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const PixTransactionRelationsInputCreate = t.Object(
   {
@@ -83,14 +156,14 @@ export const PixTransactionRelationsInputCreate = t.Object(
           {
             id: t.String({ additionalProperties: false }),
           },
-          { additionalProperties: false }
+          { additionalProperties: false },
         ),
       },
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const PixTransactionRelationsInputUpdate = t.Partial(
   t.Object(
@@ -101,19 +174,19 @@ export const PixTransactionRelationsInputUpdate = t.Partial(
             {
               id: t.String({ additionalProperties: false }),
             },
-            { additionalProperties: false }
+            { additionalProperties: false },
           ),
         },
-        { additionalProperties: false }
+        { additionalProperties: false },
       ),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const PixTransactionWhere = t.Partial(
   t.Recursive(
-    Self =>
+    (Self) =>
       t.Object(
         {
           AND: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
@@ -122,35 +195,67 @@ export const PixTransactionWhere = t.Partial(
           id: t.String(),
           amount: t.Number(),
           description: t.String(),
-          status: t.Union([t.Literal("PENDING"), t.Literal("COMPLETED"), t.Literal("FAILED")], {
-            additionalProperties: false,
-          }),
+          status: t.Union(
+            [
+              t.Literal("PENDING"),
+              t.Literal("COMPLETED"),
+              t.Literal("FAILED"),
+              t.Literal("CANCELLED"),
+              t.Literal("EXPIRED"),
+            ],
+            { additionalProperties: false },
+          ),
           recipientName: t.String(),
           recipientPixKey: t.String(),
+          transactionId: t.String(),
+          externalStatus: t.String(),
+          isRecurring: t.Boolean(),
+          periodicidade: t.Union(
+            [t.Literal("MENSAL"), t.Literal("SEMANAL"), t.Literal("ANUAL")],
+            { additionalProperties: false },
+          ),
+          dataInicio: t.Date(),
+          dataFim: t.Date(),
+          autorizacaoId: t.String(),
+          qrCode: t.String(),
+          txId: t.String(),
+          expiracaoEm: t.Date(),
+          expiracaoMinutos: t.Integer(),
           createdAt: t.Date(),
+          updatedAt: t.Date(),
+          processedAt: t.Date(),
           bankAccountId: t.String(),
         },
-        { additionalProperties: false }
+        { additionalProperties: false },
       ),
-    { $id: "PixTransaction" }
-  )
-)
+    { $id: "PixTransaction" },
+  ),
+);
 
 export const PixTransactionWhereUnique = t.Recursive(
-  Self =>
+  (Self) =>
     t.Intersect(
       [
-        t.Partial(t.Object({ id: t.String() }, { additionalProperties: false }), { additionalProperties: false }),
+        t.Partial(
+          t.Object({ id: t.String() }, { additionalProperties: false }),
+          { additionalProperties: false },
+        ),
         t.Union([t.Object({ id: t.String() })], {
           additionalProperties: false,
         }),
         t.Partial(
           t.Object({
-            AND: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
-            NOT: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
+            AND: t.Union([
+              Self,
+              t.Array(Self, { additionalProperties: false }),
+            ]),
+            NOT: t.Union([
+              Self,
+              t.Array(Self, { additionalProperties: false }),
+            ]),
             OR: t.Array(Self, { additionalProperties: false }),
           }),
-          { additionalProperties: false }
+          { additionalProperties: false },
         ),
         t.Partial(
           t.Object(
@@ -158,22 +263,45 @@ export const PixTransactionWhereUnique = t.Recursive(
               id: t.String(),
               amount: t.Number(),
               description: t.String(),
-              status: t.Union([t.Literal("PENDING"), t.Literal("COMPLETED"), t.Literal("FAILED")], {
-                additionalProperties: false,
-              }),
+              status: t.Union(
+                [
+                  t.Literal("PENDING"),
+                  t.Literal("COMPLETED"),
+                  t.Literal("FAILED"),
+                  t.Literal("CANCELLED"),
+                  t.Literal("EXPIRED"),
+                ],
+                { additionalProperties: false },
+              ),
               recipientName: t.String(),
               recipientPixKey: t.String(),
+              transactionId: t.String(),
+              externalStatus: t.String(),
+              isRecurring: t.Boolean(),
+              periodicidade: t.Union(
+                [t.Literal("MENSAL"), t.Literal("SEMANAL"), t.Literal("ANUAL")],
+                { additionalProperties: false },
+              ),
+              dataInicio: t.Date(),
+              dataFim: t.Date(),
+              autorizacaoId: t.String(),
+              qrCode: t.String(),
+              txId: t.String(),
+              expiracaoEm: t.Date(),
+              expiracaoMinutos: t.Integer(),
               createdAt: t.Date(),
+              updatedAt: t.Date(),
+              processedAt: t.Date(),
               bankAccountId: t.String(),
             },
-            { additionalProperties: false }
-          )
+            { additionalProperties: false },
+          ),
         ),
       ],
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
-  { $id: "PixTransaction" }
-)
+  { $id: "PixTransaction" },
+);
 
 export const PixTransactionSelect = t.Partial(
   t.Object(
@@ -184,18 +312,39 @@ export const PixTransactionSelect = t.Partial(
       status: t.Boolean(),
       recipientName: t.Boolean(),
       recipientPixKey: t.Boolean(),
+      transactionId: t.Boolean(),
+      externalStatus: t.Boolean(),
+      isRecurring: t.Boolean(),
+      periodicidade: t.Boolean(),
+      dataInicio: t.Boolean(),
+      dataFim: t.Boolean(),
+      autorizacaoId: t.Boolean(),
+      qrCode: t.Boolean(),
+      txId: t.Boolean(),
+      expiracaoEm: t.Boolean(),
+      expiracaoMinutos: t.Boolean(),
       createdAt: t.Boolean(),
+      updatedAt: t.Boolean(),
+      processedAt: t.Boolean(),
       bankAccountId: t.Boolean(),
       bankAccount: t.Boolean(),
       _count: t.Boolean(),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const PixTransactionInclude = t.Partial(
-  t.Object({ status: t.Boolean(), bankAccount: t.Boolean(), _count: t.Boolean() }, { additionalProperties: false })
-)
+  t.Object(
+    {
+      status: t.Boolean(),
+      periodicidade: t.Boolean(),
+      bankAccount: t.Boolean(),
+      _count: t.Boolean(),
+    },
+    { additionalProperties: false },
+  ),
+);
 
 export const PixTransactionOrderBy = t.Partial(
   t.Object(
@@ -215,27 +364,64 @@ export const PixTransactionOrderBy = t.Partial(
       recipientPixKey: t.Union([t.Literal("asc"), t.Literal("desc")], {
         additionalProperties: false,
       }),
+      transactionId: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      externalStatus: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      isRecurring: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      dataInicio: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      dataFim: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      autorizacaoId: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      qrCode: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      txId: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      expiracaoEm: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      expiracaoMinutos: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
       createdAt: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      updatedAt: t.Union([t.Literal("asc"), t.Literal("desc")], {
+        additionalProperties: false,
+      }),
+      processedAt: t.Union([t.Literal("asc"), t.Literal("desc")], {
         additionalProperties: false,
       }),
       bankAccountId: t.Union([t.Literal("asc"), t.Literal("desc")], {
         additionalProperties: false,
       }),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
-export const PixTransaction = t.Composite([PixTransactionPlain, PixTransactionRelations], {
-  additionalProperties: false,
-})
+export const PixTransaction = t.Composite(
+  [PixTransactionPlain, PixTransactionRelations],
+  { additionalProperties: false },
+);
 
 export const PixTransactionInputCreate = t.Composite(
   [PixTransactionPlainInputCreate, PixTransactionRelationsInputCreate],
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const PixTransactionInputUpdate = t.Composite(
   [PixTransactionPlainInputUpdate, PixTransactionRelationsInputUpdate],
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);

@@ -35,11 +35,4 @@ export class UserService {
   static async getUserPixHistory(userId: string): Promise<PixHistory[]> {
     return await UserRepository.getPixHistory(userId)
   }
-
-  static async addToPixHistory(
-    userId: string,
-    pixData: Omit<PixHistory, "id" | "userId" | "createdAt">
-  ): Promise<PixHistory> {
-    return await UserRepository.addPixHistory(userId, pixData)
-  }
 }

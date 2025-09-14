@@ -7,7 +7,7 @@ model BankAccount {
   agencia     String    // Agência (4 dígitos)
   conta       String    // Número da conta
   digito      String?   // Dígito verificador
-  tipo        AccountType
+  tipoConta   AccountType
   tipoPessoa  PersonType
   
   // Dados do titular

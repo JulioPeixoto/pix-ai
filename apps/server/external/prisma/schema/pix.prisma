@@ -1,19 +1,57 @@
 model PixTransaction {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
+  
+  // Dados básicos da transação
   amount          Float
   description     String?
   status          PixStatus
+  
+  // Dados do destinatário
   recipientName   String
   recipientPixKey String
-  createdAt       DateTime @default(now())
   
-  // Relations - APENAS com conta bancária
+  // Dados da transação na API Itaú
+  transactionId   String?   // ID retornado pela API do Itaú
+  externalStatus  String?   // Status vindo da API externa
+  
+  // Dados para PIX automático/recorrente
+  isRecurring     Boolean   @default(false)
+  periodicidade   PixPeriodicidade?
+  dataInicio      DateTime?
+  dataFim         DateTime?
+  autorizacaoId   String?   // ID da autorização recorrente
+  
+  // Dados para QR Code
+  qrCode          String?
+  txId            String?   // Transaction ID do QR Code
+  expiracaoEm     DateTime?
+  expiracaoMinutos Int?
+  
+  // Timestamps
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  processedAt     DateTime?
+  
+  // Relations
   bankAccountId   String @db.ObjectId
   bankAccount     BankAccount @relation(fields: [bankAccountId], references: [id])
+  
+  @@index([bankAccountId])
+  @@index([transactionId])
+  @@index([status])
+  @@index([createdAt])
 }
 
 enum PixStatus {
   PENDING
   COMPLETED
   FAILED
+  CANCELLED
+  EXPIRED
+}
+
+enum PixPeriodicidade {
+  MENSAL
+  SEMANAL
+  ANUAL
 }

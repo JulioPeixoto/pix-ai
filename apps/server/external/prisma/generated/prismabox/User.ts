@@ -1,8 +1,8 @@
-import { t } from "elysia"
+import { t } from "elysia";
 
-import { __transformDate__ } from "./__transformDate__"
+import { __transformDate__ } from "./__transformDate__";
 
-import { __nullable__ } from "./__nullable__"
+import { __nullable__ } from "./__nullable__";
 
 export const UserPlain = t.Object(
   {
@@ -14,8 +14,8 @@ export const UserPlain = t.Object(
     createdAt: t.Date(),
     updatedAt: t.Date(),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const UserRelations = t.Object(
   {
@@ -28,9 +28,10 @@ export const UserRelations = t.Object(
           agencia: t.String(),
           conta: t.String(),
           digito: __nullable__(t.String()),
-          tipo: t.Union([t.Literal("CC"), t.Literal("CP"), t.Literal("PP")], {
-            additionalProperties: false,
-          }),
+          tipoConta: t.Union(
+            [t.Literal("CC"), t.Literal("CP"), t.Literal("PP")],
+            { additionalProperties: false },
+          ),
           tipoPessoa: t.Union([t.Literal("F"), t.Literal("J")], {
             additionalProperties: false,
           }),
@@ -41,18 +42,18 @@ export const UserRelations = t.Object(
           createdAt: t.Date(),
           updatedAt: t.Date(),
         },
-        { additionalProperties: false }
+        { additionalProperties: false },
       ),
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const UserPlainInputCreate = t.Object(
   { name: t.String(), email: t.String(), pixKey: t.String(), cpf: t.String() },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const UserPlainInputUpdate = t.Object(
   {
@@ -61,8 +62,8 @@ export const UserPlainInputUpdate = t.Object(
     pixKey: t.Optional(t.String()),
     cpf: t.Optional(t.String()),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const UserRelationsInputCreate = t.Object(
   {
@@ -74,17 +75,17 @@ export const UserRelationsInputCreate = t.Object(
               {
                 id: t.String({ additionalProperties: false }),
               },
-              { additionalProperties: false }
+              { additionalProperties: false },
             ),
-            { additionalProperties: false }
+            { additionalProperties: false },
           ),
         },
-        { additionalProperties: false }
-      )
+        { additionalProperties: false },
+      ),
     ),
   },
-  { additionalProperties: false }
-)
+  { additionalProperties: false },
+);
 
 export const UserRelationsInputUpdate = t.Partial(
   t.Object(
@@ -97,31 +98,31 @@ export const UserRelationsInputUpdate = t.Partial(
                 {
                   id: t.String({ additionalProperties: false }),
                 },
-                { additionalProperties: false }
+                { additionalProperties: false },
               ),
-              { additionalProperties: false }
+              { additionalProperties: false },
             ),
             disconnect: t.Array(
               t.Object(
                 {
                   id: t.String({ additionalProperties: false }),
                 },
-                { additionalProperties: false }
+                { additionalProperties: false },
               ),
-              { additionalProperties: false }
+              { additionalProperties: false },
             ),
           },
-          { additionalProperties: false }
-        )
+          { additionalProperties: false },
+        ),
       ),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const UserWhere = t.Partial(
   t.Recursive(
-    Self =>
+    (Self) =>
       t.Object(
         {
           AND: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
@@ -135,29 +136,44 @@ export const UserWhere = t.Partial(
           createdAt: t.Date(),
           updatedAt: t.Date(),
         },
-        { additionalProperties: false }
+        { additionalProperties: false },
       ),
-    { $id: "User" }
-  )
-)
+    { $id: "User" },
+  ),
+);
 
 export const UserWhereUnique = t.Recursive(
-  Self =>
+  (Self) =>
     t.Intersect(
       [
-        t.Partial(t.Object({ id: t.String(), email: t.String(), cpf: t.String() }, { additionalProperties: false }), {
-          additionalProperties: false,
-        }),
-        t.Union([t.Object({ id: t.String() }), t.Object({ email: t.String() }), t.Object({ cpf: t.String() })], {
-          additionalProperties: false,
-        }),
+        t.Partial(
+          t.Object(
+            { id: t.String(), email: t.String(), cpf: t.String() },
+            { additionalProperties: false },
+          ),
+          { additionalProperties: false },
+        ),
+        t.Union(
+          [
+            t.Object({ id: t.String() }),
+            t.Object({ email: t.String() }),
+            t.Object({ cpf: t.String() }),
+          ],
+          { additionalProperties: false },
+        ),
         t.Partial(
           t.Object({
-            AND: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
-            NOT: t.Union([Self, t.Array(Self, { additionalProperties: false })]),
+            AND: t.Union([
+              Self,
+              t.Array(Self, { additionalProperties: false }),
+            ]),
+            NOT: t.Union([
+              Self,
+              t.Array(Self, { additionalProperties: false }),
+            ]),
             OR: t.Array(Self, { additionalProperties: false }),
           }),
-          { additionalProperties: false }
+          { additionalProperties: false },
         ),
         t.Partial(
           t.Object(
@@ -170,14 +186,14 @@ export const UserWhereUnique = t.Recursive(
               createdAt: t.Date(),
               updatedAt: t.Date(),
             },
-            { additionalProperties: false }
-          )
+            { additionalProperties: false },
+          ),
         ),
       ],
-      { additionalProperties: false }
+      { additionalProperties: false },
     ),
-  { $id: "User" }
-)
+  { $id: "User" },
+);
 
 export const UserSelect = t.Partial(
   t.Object(
@@ -192,13 +208,16 @@ export const UserSelect = t.Partial(
       bankAccounts: t.Boolean(),
       _count: t.Boolean(),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const UserInclude = t.Partial(
-  t.Object({ bankAccounts: t.Boolean(), _count: t.Boolean() }, { additionalProperties: false })
-)
+  t.Object(
+    { bankAccounts: t.Boolean(), _count: t.Boolean() },
+    { additionalProperties: false },
+  ),
+);
 
 export const UserOrderBy = t.Partial(
   t.Object(
@@ -225,18 +244,20 @@ export const UserOrderBy = t.Partial(
         additionalProperties: false,
       }),
     },
-    { additionalProperties: false }
-  )
-)
+    { additionalProperties: false },
+  ),
+);
 
 export const User = t.Composite([UserPlain, UserRelations], {
   additionalProperties: false,
-})
+});
 
-export const UserInputCreate = t.Composite([UserPlainInputCreate, UserRelationsInputCreate], {
-  additionalProperties: false,
-})
+export const UserInputCreate = t.Composite(
+  [UserPlainInputCreate, UserRelationsInputCreate],
+  { additionalProperties: false },
+);
 
-export const UserInputUpdate = t.Composite([UserPlainInputUpdate, UserRelationsInputUpdate], {
-  additionalProperties: false,
-})
+export const UserInputUpdate = t.Composite(
+  [UserPlainInputUpdate, UserRelationsInputUpdate],
+  { additionalProperties: false },
+);
